@@ -1,13 +1,7 @@
 
 # Instalasi
 
-
-
-
-## Installation
-
-Install my-project with npm
-
+## Instalasi
 ```bash
 npm install
 ```
