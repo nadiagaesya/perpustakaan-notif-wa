@@ -15,7 +15,12 @@ const api = axios.create({
 })
 
 const client = new Client({
-    authStrategy: new LocalAuth()
+    authStrategy: new LocalAuth(),
+    webVersionCache:
+    {
+        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2404.1.html',
+        type: 'remote'
+    }
 });
 
 const qrcode = require('qrcode-terminal');

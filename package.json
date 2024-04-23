@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "test": "node test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.6.0",
     "axios": "^1.6.8",
+    "baileys-md": "^5.0.5",
+    "pino": "^8.20.0",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.23.0"
   }
