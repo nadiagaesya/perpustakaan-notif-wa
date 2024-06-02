@@ -48,9 +48,9 @@ function generateMessage(deadline) {
     const today = new Date();
     const diffInDays = getDiffInDays(deadline)
     if (deadline.toString() === today.toISOString().split("T")[0]) {
-        return `Segera kembalikan buku, waktu pengembalian pada tanggal ${formatTanggalIndonesia(deadline)}`;
+        return `Segera kembalikan buku, batas waktu peminjaman buku 3 hari lagi pada tanggal ${formatTanggalIndonesia(deadline)}`;
     } else if (diffInDays === 3) {
-        return `Segera kembalikan buku, waktu pengembalian pada tanggal ${formatTanggalIndonesia(deadline)}`;
+        return `Selamat peminjaman buku telah disetujui, waktu pengembalian pada tanggal ${formatTanggalIndonesia(deadline)}`;
     } else if (diffInDays === -3) {
         return `Segera kembalikan buku, waktu pengembalian telah melewati batas waktu`;
     } else {
