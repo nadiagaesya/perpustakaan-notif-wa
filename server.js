@@ -1,3 +1,4 @@
+// import dan konfigurasi 
 const axios = require('axios').default;
 const { formatTanggalIndonesia, getDiffInDays } = require('./DateUtils')
 const { makeWASocket, DisconnectReason, useMultiFileAuthState, isJidBroadcast } = require("@whiskeysockets/baileys");
@@ -13,11 +14,13 @@ const api = axios.create({
         Authorization: "Bearer " + ACCESS_TOKEN
     }
 })
-const INTERVAL = 5000;
+const INTERVAL = 5000; //menginisialisasi interval pengulangan sebesar 5000ms (5detik)
 
 let sock = null
 
-function generateMessage(deadline) {
+// fungsi utility
+//untuk menghasilkan pesan berdasarkan selisih hari antara hari ini dan deadline
+function generateMessage(deadline) { 
     const today = new Date();
     const diffInDays = getDiffInDays(deadline)
     if (deadline.toString() === today.toISOString().split("T")[0]) {
@@ -31,9 +34,12 @@ function generateMessage(deadline) {
     }
 }
 
+//memeriksa apakah sebuah string hanya berisi angka
 function containsOnlyNumbers(str) {
     return /^\d+$/.test(str);
 }
+
+// Menentukan status baru berdasarkan selisih hari antara hari ini dan date
 function updateStatus(date) {
     const today = new Date();
     const diffInDays = getDiffInDays(date)
@@ -45,6 +51,8 @@ function updateStatus(date) {
         return "done"
     }
 }
+
+// mengonversi nomor telepon menjadi format ID whatsapp
 function whatsappID(phone) {
     if (phone.charAt(0) === "0" || phone.charAt(0) === "+") {
         return "62" + phone.substring(1) + "@s.whatsapp.net"
@@ -59,6 +67,9 @@ function whatsappID(phone) {
         return false
     }
 }
+
+// fungsi run
+//digunakan untuk mengambil data deadline dari API, memproses setiap deadline dan mengirimkan whatsapp jika sesuai dengan kondisi yang ditentukan, memperbarui status deadline setelah mengirim pesan, menangani error pengambilan data dengan penanangan khsusus untuk ststus 401
 async function run(interval) {
     api.get('/deadline').then(async res => {
         await res.data.data.forEach(async deadline => {
@@ -105,6 +116,8 @@ async function run(interval) {
     })
 }
 
+// fungsi connecttowhatsapp
+// digunakan untuk menghubungkan ke whatsapp menggunakan @whiskeysockets/baileys, mengelola status koneksi dan menangani berbagai skenario putusnya koneksi, memulai interval untuk menjalankan fungsi run
 async function connectToWhatsApp() {
     const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys');
 
@@ -148,4 +161,5 @@ async function connectToWhatsApp() {
 }
 
 // run in main file
+//memulai proses dengan menghubungkan ke whatsapp dan menjalankan interval yang telah ditentukan
 connectToWhatsApp();
